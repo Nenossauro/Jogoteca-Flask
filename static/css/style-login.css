@@ -1,6 +1,6 @@
 
 body {
-    background: url('/backindex.png');
+    background: url('../backindex.png');
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;

@@ -1,0 +1,110 @@
+    .result {
+    display: grid;
+    grid-template-rows: 10% 10% 1fr;
+    /* tava colocando o border de biblioteca no session*/
+    grid-gap: 2%;
+    height: 100%;
+  }
+  body{
+    overflow: hidden;
+  }
+  .sessao {
+    overflow-y: scroll;
+    background-color: #95a4ff;
+    display: flex;
+    flex-flow: wrap;
+    border: 2px solid black;
+    box-shadow: 15px 15px 1px #ffa580, 15px 15px 2px 2px black;
+    margin: 0 3.5rem 3.5rem 3.5rem;
+    padding: 0.4rem;
+  }
+  .pesquisa {
+    border-radius: 10px;
+    justify-self: center;
+    justify-content: center;
+    width: 100%;
+    display: flex;
+  
+  
+  }
+  
+  .txtpesquisa {
+    padding-right: 20px;
+  
+    height: 80px;
+    width: 60%;
+  }
+  #capa{
+    display: flex;
+    flex-direction: column;
+  }
+  #capa:hover{
+    cursor: pointer;
+
+    color: white;
+  }
+  
+  .capa:hover {
+    height: 210px;
+    width: 130px;
+  }
+  .capa{
+    height: 100%;
+    width: 100%;
+    transition: 0.1s;
+  }
+  .caixa {
+    border-style: solid;
+    justify-content: center;
+    overflow: hidden;
+    transition: ease-in-out 0.1s;
+    margin: 20px;
+    display: flex;
+    border-radius: 10px;
+    height: 190px;
+    width: 120px;
+  }
+  h4{
+    text-align: center;
+    margin-left: 20px;
+    width: 120px;
+  }
+
+  .hidden{
+    display: none;
+  }
+
+  #enzo{
+    margin-top: 10px;
+  }
+  #caixaform{
+    margin-left: 50%;
+  }
+  #caixaform,#info-livro{
+    background: #f8f4e5;
+    padding: 2%;
+    margin-bottom: 5%;
+    margin-left: 32%;
+    align-self: center;
+    justify-self: center;
+    border: 2px solid black;
+    box-shadow: 15px 15px 1px #ffa580, 15px 15px 1px 2px black;
+    height: fit-content;
+    position: absolute;
+  }
+  #mova{
+    display: flex;
+    justify-content: center;
+    height: 3rem;
+    border: 2px solid black;
+    text-align: center;
+    background: #ffa580;
+    cursor: move;
+  }
+  #mova h3{
+    align-self: center;
+  }
+
+  #info-livro h2{
+    margin-top: 10px;
+  }

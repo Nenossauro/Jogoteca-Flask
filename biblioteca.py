@@ -2,9 +2,6 @@ from flask import Flask, render_template, request, redirect, session, flash
 import os, pymongo
 #Importando os módulos necessários para o projeto Flask.
 
-
-
-
 app = Flask(__name__)
 app.secret_key = 'enzo'
 #Criando uma instância do objeto Flask e definindo a chave secreta para uso nas sessões.
@@ -15,6 +12,7 @@ os.system("cls")
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["biblioteca"]
 collection = db["users"]
+collection_livros = db["livros"]
 #Estabelecendo a conexão com o banco de dados MongoDB, especificando o banco de dados "biblioteca" e a coleção "users".
 #Se você quiser abrir o programa ai na sua casa, é só criar um banco de dados com essas caracteristicas
 
@@ -32,6 +30,24 @@ def inicio():
 #Se o usuário não estiver logado, será redirecionado para a página principal ('/'). 
 #Caso contrário, o template 'land.html' será renderizado, passando a variável 'pessoa' com o valor da sessão 'user_logged'.
 
+@app.route('/estante')
+def estante():
+    if 'user_logged' not in session or session['user_logged'] == None:
+        return redirect('/')
+    livros_id = collection_livros.find()
+    livro = []
+    ids = []
+    for item in livros_id:
+        v_item = item["capa"]
+        v_id = item["id"]
+        livro.append(v_item)
+        ids.append(int(v_id))
+    return render_template('estante.php',pessoa =session['user_logged'],livro = livro,ids = ids)
+@app.route('/perfil')
+def perfil():
+    if 'user_logged' not in session or session['user_logged'] == None:
+        return redirect('/')
+    return render_template('perfil.php',pessoa =session['user_logged'])
 
 @app.route('/criar', methods=['POST',])
 def criar():
@@ -43,7 +59,6 @@ def criar():
 #Definindo a rota '/criar', que recebe uma solicitação POST para criar um novo usuário. 
 #Os dados do formulário são recuperados e um novo documento é inserido na coleção 'users' no banco de dados. 
 #Após a inserção, o usuário é redirecionado para a página principal ('/').
-
 
 @app.route('/autenticar', methods=['POST',])
 def autenticar():
@@ -83,5 +98,10 @@ def logout():
 #A sessão 'user_logged' é definida como None e o usuário é redirecionado para a página principal ('/').
 
 
-app.run()
+
+
+
+
+
+app.run(debug=True)
 #Iniciando o servidor Flask.
