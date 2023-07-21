@@ -9,12 +9,11 @@
     <link rel="stylesheet" href="static/css/global.css">
     <link rel="stylesheet" href="static/css/style-result.css">
 </head>
-<body>
+<body onload="limparcookie()">
     <main class="result">
     <nav>
     <a id="cimae" onclick="limparcookie()" href="inicio">Início</a>
     <a id="cimae" onclick="limparcookie()" href="estante">Consulta</a>
-    <a id="cimae" onclick="limparcookie()" href="relatorios">Relatorios</a>
     <a id="cimae" onclick="limparcookie()" href="perfil">Perfil</a>
     <a id="cimae" onclick="limparcookie()" href="sobre">Sobre</a>
 
@@ -60,51 +59,36 @@
                     location.reload();
                     return id;
                 }    
-                function abriredit(){
-                    var formContainer = document.getElementById("caixaform");
-                    formContainer.classList.remove("hidden");
-                }
-                function closeForm(op) {
-                    switch(op){
-                        case  1:
-                            var formContainer = document.getElementById("caixaform");
-                            formContainer.classList.add("hidden");
-                            break;
-                            
-                        case 2:
-                            var formContainer = document.getElementById("info-livro");
-                            var formContainer2 = document.getElementById("caixaform");
-                            formContainer2.classList.add("hidden");
-                            formContainer.classList.add("hidden");                            
-                            break;
-                            
-                }
-                }
+                
+        function abriredit(){
+            var formContainer = document.getElementById("caixaform");
+            formContainer.classList.remove("hidden");
+        }
+        function closeForm(op) {
+                    var formContainer = document.getElementById("info-livro");
+                    formContainer.classList.add("hidden");                            
+                
+        }
+        function setLivroId(id) {
+            document.getElementById('livro_id').value = id;
+        }
 
 </script>
-<div id='info-livro' class='form <?php if ($_COOKIE['samuel'] == 0) echo 'hidden';?>
+<div id='info-livro' class='form' <?php if ($_COOKIE['samuel'] == 0) echo 'hidden';?>
     <div id="mova"><h3>Segure aqui e mova</h3></div>
-    
+    <h2> Id:</h2> {{id_liv}}
+    <h2> Nome:</h2> {{nome[id_liv]}}
     <h2> Avaliar: </h2>
     <form method='post' action=''>
-    <input type='text' placeholder='Nota de 0 a 10'  name='txtaval' size='2' maxlength='2' >
-    <input class='button' id='enzo' type='submit' name='btnaval' value='Avaliar'  />
-    <input class='button' id='enzo' type='submit' name='btnsalvar' value='Salvar'  />
+        <input type='text' placeholder='Nota de 0 a 10'  name='txtaval' size='2' maxlength='2' >
+        <input class='button' id='enzo' type='submit' name='btnaval' value='Avaliar'  />
+    </form>
+    <form method='post' action='salvar'>
+        <input type="hidden" name="livro_id" id="livro_id" value={{id_liv}}>
+        <input class='button' id='enzo' type="submit" value="Salvar">
+    </form>
     <input class='button' id='enzo' type='button' value='Fechar' onclick='closeForm(2)'/></form> </div>
     
-</div>
-<div id='caixaform' class='hidden'>
-    <div id="mova"><h3>Segure aqui e mova</h3></div>
-        <form name='dados' method='post' action='' enctype='multipart/form-data'>               
-            <input type='text' placeholder='Nome'  name='txtnome' size='30' maxlength='100' >
-            <input type='text' placeholder='Gênero' name='txtgenero' size='30' maxlength='30'>
-            <input type='text' placeholder='ISBN' name='txtisbn' size='30' maxlength='30' >
-            <input type='text' placeholder='Autor' name='txtautor' size='30' maxlength='30' >
-            <input class='button' id='enzo' type='submit' name='btnsalv' value='Salvar'  />
-            <input class='button' id='enzo' type='submit' name='btnapags' value='Apagar' />
-            <input class='button' id='enzo' type='button' value='Fechar' onclick='closeForm(1)'/>
-            
-    </form>
 </div>
     
         <script>

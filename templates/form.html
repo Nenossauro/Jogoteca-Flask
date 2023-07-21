@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="UTF-8" /> 
+        <link rel="stylesheet" type="text/css" href="static/css/style-form.css">
+        <link rel="stylesheet" type="text/css" href="static/css/global.css">
+        <title>Inserir livros</title>
+    </head>
+
+<body>
+
+<main>
+
+<nav>
+    <a id="cimae" href="land">Início</a>
+    <a id="cimae" href="estante">Consulta</a>
+    <a id="cimae" href="perfil">Perfil</a>
+    <a id="cimae" href="sobre">Sobre</a>
+    
+    <a id="cimae" class="logout" href="/logout">Logout</a>
+
+
+</nav>
+
+<div class="caixaform">
+            
+        <form name="dados" method="POST" action="/inserir" id="main-form" enctype="multipart/form-data">
+            Id deste livro: {{idp}}
+            <input type="text" id="input-form"required="" name="txtnome" size="30" maxlength="100" placeholder="Nome">
+            <input type="text" id="input-form"required="" name="txtgenero" size="30" maxlength="30" placeholder="Gênero">
+            <input type="text" id="input-form"required="" name="txtisbn" size="30" maxlength="30" placeholder="ISBN">
+            <input type="text" id="input-form"required="" name="txtautor" size="30" maxlength="30" placeholder="Autor">
+            <input type="file" id="input-form" name="img" accept="image/x-png,image/jpeg">
+            <input class="button" type="submit" name="btnenviar" />
+           
+
+        </form>
+    </div>
+
+</main>
+
+    
+    
+    
+
+</body>
+
+
+</html>

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, flash
-import os, pymongo
+import os, pymongo, base64
 #Importando os módulos necessários para o projeto Flask.
 
 app = Flask(__name__)
@@ -29,25 +29,80 @@ def inicio():
 #Definindo a rota '/inicio', que requer autenticação. 
 #Se o usuário não estiver logado, será redirecionado para a página principal ('/'). 
 #Caso contrário, o template 'land.html' será renderizado, passando a variável 'pessoa' com o valor da sessão 'user_logged'.
-
+@app.route('/form')
+def form():
+    if 'user_logged' not in session or session['user_logged'] == None:
+        return redirect('/')
+    livros_id = collection_livros.find()
+    ids = []
+    for item in livros_id:
+        v_id = item["id"]
+        ids.append(int(v_id))
+    return render_template('form.html', idp = len(ids))
+@app.route('/inserir', methods=['POST',])
+def inserir():
+    livros_id = collection_livros.find()
+    ids = []
+    for item in livros_id:
+        v_id = item["id"]
+        ids.append(int(v_id))
+    id = len(ids)
+    
+    nome = request.form['txtnome']
+    genero = request.form['txtgenero']
+    isbn = request.form['txtisbn']
+    autor = request.form['txtautor']
+    capa = request.files['img']
+    imagem_base64 = base64.b64encode(capa.read()).decode('utf-8')
+    collection_livros.insert_one({"nome":nome,"genero":genero,"isbn":isbn,"autor":autor,"capa":imagem_base64,"id":id})
+    return redirect('/form')
 @app.route('/estante')
 def estante():
     if 'user_logged' not in session or session['user_logged'] == None:
         return redirect('/')
+    
+    if request.cookies.get('samuel'):
+        meu_cookie = request.cookies.get('samuel')
+    else:
+        meu_cookie = '0'
     livros_id = collection_livros.find()
     livro = []
     ids = []
+    nomes = []
     for item in livros_id:
         v_item = item["capa"]
         v_id = item["id"]
+        v_nome = item["nome"]
         livro.append(v_item)
+        nomes.append(v_nome)
         ids.append(int(v_id))
-    return render_template('estante.php',pessoa =session['user_logged'],livro = livro,ids = ids)
+    return render_template('estante.php',pessoa =session['user_logged'],livro = livro,ids = ids,nome=nomes,id_liv = int(meu_cookie))
+
+@app.route('/salvar', methods=['POST',])
+def salvar():
+    if 'user_logged' not in session or session['user_logged'] == None:
+        return redirect('/')
+    id = request.form.get('livro_id')
+    check = collection.find_one({"nome": session['user_logged'],"like": id})
+    if not check:
+        collection.update_one({"nome": session['user_logged']}, {"$push": {"like": id}})
+    
+    return redirect('/estante')
 @app.route('/perfil')
 def perfil():
     if 'user_logged' not in session or session['user_logged'] == None:
         return redirect('/')
-    return render_template('perfil.php',pessoa =session['user_logged'])
+    llivros_like = collection.find({"nome": session['user_logged']})
+    for item in llivros_like:
+        v_id = item["like"]
+    nomes = []
+
+    for ids in range(len(v_id)):
+        livros = collection_livros.find({"id":v_id[ids]})
+        for livro in livros:
+            v_l = livro["capa"]
+            nomes.append(v_l)
+    return render_template('perfil.html',pessoa =session['user_logged'],ids = nomes)
 
 @app.route('/criar', methods=['POST',])
 def criar():
@@ -103,5 +158,5 @@ def logout():
 
 
 
-app.run(debug=True)
+app.run()
 #Iniciando o servidor Flask.

@@ -5,19 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Protótipo</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="styles/style-perfil.css">
-    <link rel="stylesheet" href="styles/style-result.css">
+    <link rel="stylesheet" href="static/css/global.css">
+    <link rel="stylesheet" href="static/css/style-perfil.css">
+    <link rel="stylesheet" href="static/css/style-result.css">
 
 </head>
 <nav>
-<a id="cimae" href="land.php">Início</a>
-<a id="cimae" href="resultados.php">Consulta</a>
-<a id="cimae" href="relatorios.php">Relatorios</a>
-<a id="cimae" href="perfil.php">Perfil</a>
-<a id="cimae" href="sobre.html">Sobre</a>
-
-<a id="cimae" class="logout" href="index.php">Logout</a>
+    <a id="cimae" href="land">Início</a>
+    <a id="cimae" href="estante">Consulta</a>
+    <a id="cimae" href="perfil">Perfil</a>
+    <a id="cimae" href="sobre">Sobre</a>
+    
+    <a id="cimae" class="logout" href="/logout">Logout</a>
 
 
 </nav>
@@ -25,8 +24,7 @@
     <div class="mae">
         <div class="div1">
             <center><h2>Perfil</h2> </center> 
-            
-                
+            <h2>Nome de usuário:</h2> {{pessoa}}
                 
                 
 
@@ -35,7 +33,20 @@
         <div class="div1">
             <center><h3>Sua estante</h3></center> 
                 <div class="estante">
-                <center>Uh Oh! Parece que você ainda não salvou nenhum livro!"
+                    {%if ids%}
+                        {%for id in ids%}
+                        <div id='capa'>
+                            <div class='caixa'>
+                                <img class='capa' src='data:image/jpeg;base64,{{id}}'alt='Capa do livro'>   
+                            </div>
+                            <h4>
+                                
+                            </h4>
+                        </div>
+                        {%endfor%}
+                    {%else%}
+                        <center>Uh Oh! Parece que você ainda não salvou nenhum livro!"
+                    {%endif%}
                 </div>
             
         </div>
