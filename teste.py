@@ -25,7 +25,7 @@ for item in livros_like:
 
 
 
-livros_like = collection.find({"nome": "Nenossauro"})
+livros_like = collection.find({"nome": "akiox0202"})
 print("livro like=",livros_like)
 for item in livros_like:
     print("item=",item)
@@ -37,6 +37,7 @@ for ids in range(len(v_id)):
     print("iteração: ",ids)
     print("id a procurar: ",v_id[ids])
     livros = collectionl.find({"id":v_id[ids]})
+    print("Procurando id: ",v_id[ids])
     for livro in livros:
         v_l = livro["nome"]
         nomes.append(v_l)
